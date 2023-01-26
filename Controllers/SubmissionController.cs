@@ -14,17 +14,19 @@ public class SubmissionController : ControllerBase
     {
         _logger = logger;
     }
-
+    
+    [HttpGet]
     public IActionResult Get()
     {
         //gets posts submitted
-        return Ok();
+        return Ok("you got me");
     }
-    
-    public IActionResult Get(int id)
+
+    [HttpGet("{id}")]
+    public IActionResult GetIt(int id)
     {
         //getting a specific post
-        return Ok();
+        return Ok(id);
     }
 
     public IActionResult Post(Submission s)
@@ -35,3 +37,4 @@ public class SubmissionController : ControllerBase
 
 
 }
+

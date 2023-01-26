@@ -6,7 +6,8 @@ namespace ticktrax_backend
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddTransient<ISubmissionService, SubmissionService>();
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
