@@ -2,7 +2,11 @@ using ticktrax_backend.Models;
 
 public interface ISubmissionService
 {
-    Task<bool> AddSubmission(Submission s);
+    Task<bool> AddSubmission(Submission sub);
+
+    Task<Submission> DeleteSubmission(int id);
+
+    Task<Submission> UpdateSubmission(Submission sub);
 
     Task<IEnumerable<Submission>> Get();
 

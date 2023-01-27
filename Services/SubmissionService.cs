@@ -1,9 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using ticktrax_backend.Models;
 using System.Collections;
 using ticktrax_backend.DataAnnotations;
 
 public class SubmissionService : ISubmissionService
 {
+
 
     private TickTraxContext context;
 
@@ -12,37 +14,59 @@ public class SubmissionService : ISubmissionService
         context = _ctx;
     }
 
-    public async Task<bool> AddSubmission(Submission s)
+    public async Task<bool> AddSubmission(Submission sub)
     {
-        Submission sub = new Submission
+        Submission s = new Submission
         {
-            Photo = s.Photo,
-            Location = s.Location,
-            Caption = s.Caption,
-            Time = s.Time
+            Photo = sub.Photo,
+            Location = sub.Location,
+            Caption = sub.Caption,
+            Time = sub.Time
         };
+        var result = await context.Submissions.AddAsync(s);
 
-        var result = await context.Submissions.AddAsync(sub);
-
-        await context.SaveChangesAsync();
-
-        if(result.IsKeySet)
+        if (result.IsKeySet)
         {
             return true;
         }
 
         return false;
-
     }
 
-    public SubmissionService()
+    public async Task<Submission> DeleteSubmission(int id)
     {
+        var item = await context.Submissions.Where(task => task.Id == id).FirstOrDefaultAsync();
 
+        if(item != null)
+        {
+            var returns = context.Submissions.Remove(item);
+            return returns.Entity;
+        }
+
+        return item;
+    }
+
+    public async Task<Submission> UpdateSubmission(Submission sub)
+    {
+        var subToUpdate = await context.Submissions.Where(submissionItem => submissionItem.Photo == sub.Photo && submissionItem.Time == sub.Time).FirstOrDefaultAsync();
+
+        if(subToUpdate != null)
+        {
+            subToUpdate.Photo = sub.Photo;
+            subToUpdate.Location = sub.Location;
+            subToUpdate.Caption = sub.Caption;
+            subToUpdate.Time = sub.Time;
+
+            context.Submissions.Update(subToUpdate);
+        }else{
+            throw new System.Exception("no models found to update");
+        }
+
+        return subToUpdate;
     }
 
     public Task<IEnumerable<Submission>> Get()
     {
-
 
         throw new NotImplementedException();
     }
@@ -61,6 +85,7 @@ public class SubmissionService : ISubmissionService
         throw new NotImplementedException();
     }
 
+    
 
 
 }
