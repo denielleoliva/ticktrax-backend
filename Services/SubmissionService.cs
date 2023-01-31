@@ -25,6 +25,7 @@ public class SubmissionService : ISubmissionService
             Time = sub.Time
         };
         var result = await context.Submissions.AddAsync(s);
+        context.SaveChanges();
 
         if (result.IsKeySet)
         {

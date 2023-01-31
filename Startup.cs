@@ -12,7 +12,7 @@ namespace ticktrax_backend
                     "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=root;Password=password;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             services.AddTransient<ISubmissionService, SubmissionService>();
-            services.AddControllers();
+            services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

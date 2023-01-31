@@ -33,12 +33,12 @@ public class SubmissionController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(SubmissionDto s)
+    public IActionResult Post([FromBody]SubmissionDto s)
     {
         if(!ModelState.IsValid){
-            return BadRequest(ModelState.ValidationState);
+            return BadRequest("garbage");
         }else{
-            Console.WriteLine(s);
+            Console.WriteLine(s.Photo);
             submissionService.AddSubmission(s);
             return Ok();
         }
