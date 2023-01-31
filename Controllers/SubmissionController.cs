@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ticktrax_backend.Models;
+using ticktrax_backend.dtomodels;
 
 namespace ticktrax_backend.Controllers;
 
@@ -9,10 +10,12 @@ public class SubmissionController : ControllerBase
 {
 
     private readonly ILogger<SubmissionController> _logger;
+    private ISubmissionService submissionService;
 
-    public SubmissionController(ILogger<SubmissionController> logger)
+    public SubmissionController(ILogger<SubmissionController> logger, ISubmissionService submissionService)
     {
         _logger = logger;
+        this.submissionService = submissionService;
     }
     
     [HttpGet]
@@ -29,10 +32,16 @@ public class SubmissionController : ControllerBase
         return Ok(id);
     }
 
-    public IActionResult Post(Submission s)
+    [HttpPost]
+    public IActionResult Post(SubmissionDto s)
     {
-        //put a submission into database
-        return Ok();
+        if(!ModelState.IsValid){
+            return BadRequest(ModelState.ValidationState);
+        }else{
+            Console.WriteLine(s);
+            submissionService.AddSubmission(s);
+            return Ok();
+        }
     }
 
 

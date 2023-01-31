@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\denie\\Documents\\ticktrax-backend\\ticktrax-backend.csproj": {}
+    "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\denie\\Documents\\ticktrax-backend\\ticktrax-backend.csproj": {
+    "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\denie\\Documents\\ticktrax-backend\\ticktrax-backend.csproj",
+        "projectUniqueName": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
         "projectName": "ticktrax-backend",
-        "projectPath": "C:\\Users\\denie\\Documents\\ticktrax-backend\\ticktrax-backend.csproj",
-        "packagesPath": "C:\\Users\\denie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\denie\\Documents\\ticktrax-backend\\obj\\",
+        "projectPath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
+        "packagesPath": "/Users/denielleoliva/.nuget/packages/",
+        "outputPath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\denie\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/denielleoliva/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/7.0.100/libexec/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

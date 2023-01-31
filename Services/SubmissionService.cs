@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using ticktrax_backend.Models;
 using System.Collections;
-using ticktrax_backend.DataAnnotations;
+using ticktrax_backend.Data;
+using ticktrax_backend.dtomodels;
 
 public class SubmissionService : ISubmissionService
 {
@@ -14,7 +15,7 @@ public class SubmissionService : ISubmissionService
         context = _ctx;
     }
 
-    public async Task<bool> AddSubmission(Submission sub)
+    public async Task<bool> AddSubmission(SubmissionDto sub)
     {
         Submission s = new Submission
         {

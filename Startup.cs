@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ticktrax_backend.Data;
 
 namespace ticktrax_backend
 {
@@ -6,6 +7,10 @@ namespace ticktrax_backend
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TickTraxContext>(dbContextOptions =>
+                dbContextOptions.UseMySql(
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=root;Password=password;", 
+                    ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             services.AddTransient<ISubmissionService, SubmissionService>();
             services.AddControllers();
         }

@@ -1,8 +1,9 @@
 using ticktrax_backend.Models;
+using ticktrax_backend.dtomodels;
 
 public interface ISubmissionService
 {
-    Task<bool> AddSubmission(Submission sub);
+    Task<bool> AddSubmission(SubmissionDto sub);
 
     Task<Submission> DeleteSubmission(int id);
 
