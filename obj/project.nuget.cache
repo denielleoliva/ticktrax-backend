@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zgioAeKXBLh9K3bc5IQErD1tZkuR32jEeXKzdYCt+il7asVNVRtb6VfgaQsT82i/naUq7BLqmnaUdh63KK0nKQ==",
+  "dgSpecHash": "xpfdWzYYLUdq8mSCuSJfPxJ5gxhM2bB6+6sZFRuBLKCk6oS8HO9hwwtEyHqOUEUHdqZNUGddazZ/MdfFphjNJg==",
   "success": true,
   "projectFilePath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
   "expectedPackageFiles": [
+    "/Users/denielleoliva/.nuget/packages/geolocation/1.2.1/geolocation.1.2.1.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/microsoft.aspnetcore.openapi/7.0.0/microsoft.aspnetcore.openapi.7.0.0.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/microsoft.entityframeworkcore/7.0.2/microsoft.entityframeworkcore.7.0.2.nupkg.sha512",

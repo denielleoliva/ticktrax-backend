@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Geolocation;
+
 
 namespace ticktrax_backend.Models
 {
@@ -13,7 +15,10 @@ namespace ticktrax_backend.Models
         public string Photo { get; set; }
 
         [Required]
-        public string Location { get; set; }
+        public double Latitude { get; set; }
+
+        [Required]
+        public double Longitude { get; set; }
 
         [Required]
         public string Caption { get; set; }

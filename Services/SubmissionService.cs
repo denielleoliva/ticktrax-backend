@@ -3,6 +3,7 @@ using ticktrax_backend.Models;
 using System.Collections;
 using ticktrax_backend.Data;
 using ticktrax_backend.dtomodels;
+using Geolocation;
 
 public class SubmissionService : ISubmissionService
 {
@@ -20,7 +21,8 @@ public class SubmissionService : ISubmissionService
         Submission s = new Submission
         {
             Photo = sub.Photo,
-            Location = sub.Location,
+            Latitude = sub.Latitude,
+            Longitude = sub.Longitude,
             Caption = sub.Caption,
             Time = sub.Time
         };
@@ -55,7 +57,8 @@ public class SubmissionService : ISubmissionService
         if(subToUpdate != null)
         {
             subToUpdate.Photo = sub.Photo;
-            subToUpdate.Location = sub.Location;
+            subToUpdate.Latitude = sub.Latitude;
+            subToUpdate.Longitude = sub.Longitude;
             subToUpdate.Caption = sub.Caption;
             subToUpdate.Time = sub.Time;
 
@@ -67,17 +70,27 @@ public class SubmissionService : ISubmissionService
         return subToUpdate;
     }
 
-    public Task<IEnumerable<Submission>> Get()
+    public async Task<IEnumerable<Submission>> Get()
     {
-
-        throw new NotImplementedException();
+        return await context.Submissions.ToListAsync();
     }
 
-    public Task<Submission> Get(int id)
+    public async Task<Submission> GetById(int id)
     {
+        var result = await context.Submissions.Where(sub => sub.Id == id).FirstOrDefaultAsync();
 
+        //fix nullable at some point
+        return result;
+    }
 
-        throw new NotImplementedException();
+    public async Task<Submission> GetByLocation(double Longitude, double Latitude)
+    {
+       var result = await context.Submissions.Select(x => new { x, delta = Math.Abs(x.Latitude - Latitude) + Math.Abs(x.Longitude - Longitude)})
+        .OrderBy(x => x.delta)
+        .FirstOrDefaultAsync();
+
+        //fix nullable at some point
+        return result.x;
     }
 
     public Task<bool> Post(Submission s)

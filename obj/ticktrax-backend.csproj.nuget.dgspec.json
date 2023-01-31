@@ -65,6 +65,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "geolocation": {
+              "target": "Package",
+              "version": "[1.2.1, )"
             }
           },
           "imports": [

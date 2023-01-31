@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Geolocation;
 namespace ticktrax_backend.dtomodels
 {
     public class SubmissionDto
@@ -7,7 +8,9 @@ namespace ticktrax_backend.dtomodels
         public string Photo { get; set; }
 
         //[Required]
-        public string Location { get; set; }
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
 
         //[Required]
         //[MaxLength(150)]

@@ -19,17 +19,32 @@ public class SubmissionController : ControllerBase
     }
     
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
-        //gets posts submitted
-        return Ok("you got me");
+        var result = await submissionService.Get();
+
+        return new JsonResult(result);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetIt(int id)
+    public async Task<IActionResult> GetIt(int id)
     {
-        //getting a specific post
-        return Ok(id);
+        var result = await submissionService.GetById(id);
+
+        if(result == null){
+            return BadRequest("id does not exist");
+        }
+
+        return new JsonResult(result);
+    }
+
+    [HttpGet("closest")]
+    public async Task<IActionResult> GetClosestLocation(double Longitude, double Latitude)
+    {
+        var result = await submissionService.GetByLocation(Longitude, Latitude);
+
+        return new JsonResult(result);
+
     }
 
     [HttpPost]
@@ -38,9 +53,8 @@ public class SubmissionController : ControllerBase
         if(!ModelState.IsValid){
             return BadRequest("garbage");
         }else{
-            Console.WriteLine(s.Photo);
             submissionService.AddSubmission(s);
-            return Ok();
+            return Ok("posting...");
         }
     }
 

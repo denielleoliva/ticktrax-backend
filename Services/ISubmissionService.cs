@@ -1,5 +1,6 @@
 using ticktrax_backend.Models;
 using ticktrax_backend.dtomodels;
+using Geolocation;
 
 public interface ISubmissionService
 {
@@ -11,7 +12,9 @@ public interface ISubmissionService
 
     Task<IEnumerable<Submission>> Get();
 
-    Task<Submission> Get(int id);
+    Task<Submission> GetById(int id);
+
+     Task<Submission> GetByLocation(double Longitude, double Latitude);
 
     Task<bool> Post(Submission s);
 }
