@@ -25,5 +25,9 @@ namespace ticktrax_backend.Models
 
         [Required]
         public DateTime Time { get; set; }
+
+        public User Owner { get; set; }
+
+        public string OwnerId { get; set; }
     }
 }

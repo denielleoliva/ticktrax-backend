@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ticktrax_backend.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ticktrax_backend.Data
 {
-    public class TickTraxContext : DbContext
+    public class TickTraxContext : IdentityDbContext<User>
     {
         private readonly IConfiguration _configuration;
 
@@ -25,10 +27,17 @@ namespace ticktrax_backend.Data
 
         public Microsoft.EntityFrameworkCore.DbSet<Submission> Submissions { get; set; }
 
+        public Microsoft.EntityFrameworkCore.DbSet<User> Users { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Submission>()
+                .HasOne(sub => sub.Owner)
+                .WithMany(user => user.UserSubmissions)
+                .HasForeignKey(sub => sub.OwnerId);
         }
     }
 }

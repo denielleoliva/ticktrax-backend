@@ -10,7 +10,10 @@ public class SubmissionService : ISubmissionService
 
 
     private TickTraxContext context;
+    /*
 
+    */
+    
     public SubmissionService(TickTraxContext _ctx)
     {
         context = _ctx;
@@ -37,22 +40,22 @@ public class SubmissionService : ISubmissionService
         return false;
     }
 
-    public async Task<Submission> DeleteSubmission(int id)
+    public async Task<bool> DeleteSubmission(int id)
     {
-        var item = await context.Submissions.Where(task => task.Id == id).FirstOrDefaultAsync();
+        Submission? item = await context.Submissions.Where(task => task.Id == id).FirstOrDefaultAsync();
 
         if(item != null)
         {
             var returns = context.Submissions.Remove(item);
-            return returns.Entity;
+            return true;
         }
 
-        return item;
+        return false;
     }
 
     public async Task<Submission> UpdateSubmission(Submission sub)
     {
-        var subToUpdate = await context.Submissions.Where(submissionItem => submissionItem.Photo == sub.Photo && submissionItem.Time == sub.Time).FirstOrDefaultAsync();
+        Submission? subToUpdate = await context.Submissions.Where(submissionItem => submissionItem.Photo == sub.Photo && submissionItem.Time == sub.Time).FirstOrDefaultAsync();
 
         if(subToUpdate != null)
         {
@@ -77,12 +80,14 @@ public class SubmissionService : ISubmissionService
 
     public async Task<Submission> GetById(int id)
     {
-        var result = await context.Submissions.Where(sub => sub.Id == id).FirstOrDefaultAsync();
+        Submission? result = await context.Submissions.Where(sub => sub.Id == id).FirstOrDefaultAsync();
 
         //fix nullable at some point
         return result;
     }
 
+
+    //Source: https://github.com/scottschluer/geolocation
     public async Task<Submission> GetByLocation(double Longitude, double Latitude)
     {
        var result = await context.Submissions.Select(x => new { x, delta = Math.Abs(x.Latitude - Latitude) + Math.Abs(x.Longitude - Longitude)})
@@ -93,10 +98,9 @@ public class SubmissionService : ISubmissionService
         return result.x;
     }
 
+
     public Task<bool> Post(Submission s)
     {
-
-
         throw new NotImplementedException();
     }
 

@@ -89,3 +89,9 @@ C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ticktrax-backend.pdb
 C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ticktrax-backend.genruntimeconfig.cache
 C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Geolocation.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.Extensions.Identity.Core.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.Extensions.Identity.Stores.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Security.Permissions.dll

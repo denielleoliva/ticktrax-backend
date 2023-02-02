@@ -6,7 +6,7 @@ public interface ISubmissionService
 {
     Task<bool> AddSubmission(SubmissionDto sub);
 
-    Task<Submission> DeleteSubmission(int id);
+    Task<bool> DeleteSubmission(int id);
 
     Task<Submission> UpdateSubmission(Submission sub);
 
