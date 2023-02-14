@@ -32,6 +32,7 @@ namespace ticktrax_backend
 
             builder.SetBasePath(Directory.GetCurrentDirectory())
                 //.AddJsonFile("config.json")
+                //.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
             // because add env var is after json config, an environment var will override a json var
         }

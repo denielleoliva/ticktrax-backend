@@ -10,11 +10,11 @@ namespace ticktrax_backend
         {
             services.AddDbContext<TickTraxContext>(dbContextOptions =>
                 dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=root;Password=password;", 
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             services.AddDbContext<TickTraxContext>(dbContextOptions => 
                 dbContextOptions.UseMySql(
-                    "Server=localhost, 3306;Initial Catalog=userDb; User Id=root; Password=password;",
+                    "Server=localhost,3306;Initial Catalog=userDb; User Id=dan; Password=supersecret!1;",
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)
                 ));
 

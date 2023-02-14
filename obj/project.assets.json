@@ -2760,6 +2760,7 @@
       "Microsoft.AspNetCore.Identity >= 2.2.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.2",
       "Microsoft.AspNetCore.OpenApi >= 7.0.0",
+      "Microsoft.EntityFrameworkCore >= 7.0.2",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.2",
       "Newtonsoft.json >= 13.0.2",
@@ -2769,19 +2770,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/denielleoliva/.nuget/packages/": {}
+    "/home/ticktrax/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
+      "projectUniqueName": "/home/ticktrax/ticktrax-backend/ticktrax-backend.csproj",
       "projectName": "ticktrax-backend",
-      "projectPath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
-      "packagesPath": "/Users/denielleoliva/.nuget/packages/",
-      "outputPath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/obj/",
+      "projectPath": "/home/ticktrax/ticktrax-backend/ticktrax-backend.csproj",
+      "packagesPath": "/home/ticktrax/.nuget/packages/",
+      "outputPath": "/home/ticktrax/ticktrax-backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/denielleoliva/.nuget/NuGet/NuGet.Config"
+        "/home/ticktrax/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -2816,6 +2817,10 @@
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[7.0.0, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[7.0.2, )"
           },
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -2857,6 +2862,20 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[7.0.2, 7.0.2]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.linux-x64",
+            "version": "[7.0.2, 7.0.2]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[7.0.2, 7.0.2]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2865,7 +2884,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/7.0.100/libexec/sdk/7.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
       }
     }
   }
