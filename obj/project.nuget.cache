@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+jQZHp6Vqy+2K75r//CUH3/o5pqTprWkD5KXMN9bfTQPcsDSjkWniGK+BM2DznKSRVs8gEaiiXqJ///v4NIoLg==",
+  "dgSpecHash": "PoYAq93zm+aonVaXk3sZ30B5JsQi8YPe24gdwppZbf0/GFWGusd9r6eHqK0cM/B/2jyK3D8xn7gIUD49gSZ0zg==",
   "success": true,
   "projectFilePath": "/home/ticktrax/ticktrax-backend/ticktrax-backend.csproj",
   "expectedPackageFiles": [
     "/home/ticktrax/.nuget/packages/geolocation/1.2.1/geolocation.1.2.1.nupkg.sha512",
     "/home/ticktrax/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
+    "/home/ticktrax/.nuget/packages/microsoft.aspnet.cors/5.2.9/microsoft.aspnet.cors.5.2.9.nupkg.sha512",
     "/home/ticktrax/.nuget/packages/microsoft.aspnetcore.authentication/2.2.0/microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "/home/ticktrax/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "/home/ticktrax/.nuget/packages/microsoft.aspnetcore.authentication.cookies/2.2.0/microsoft.aspnetcore.authentication.cookies.2.2.0.nupkg.sha512",
@@ -68,10 +69,18 @@
     "/home/ticktrax/.nuget/packages/system.security.permissions/4.5.0/system.security.permissions.4.5.0.nupkg.sha512",
     "/home/ticktrax/.nuget/packages/system.security.principal.windows/4.5.0/system.security.principal.windows.4.5.0.nupkg.sha512",
     "/home/ticktrax/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
-    "/home/ticktrax/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
-    "/home/ticktrax/.nuget/packages/microsoft.netcore.app.ref/7.0.2/microsoft.netcore.app.ref.7.0.2.nupkg.sha512",
-    "/home/ticktrax/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.2/microsoft.aspnetcore.app.ref.7.0.2.nupkg.sha512",
-    "/home/ticktrax/.nuget/packages/microsoft.netcore.app.host.linux-x64/7.0.2/microsoft.netcore.app.host.linux-x64.7.0.2.nupkg.sha512"
+    "/home/ticktrax/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.Cors 5.2.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Cors",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

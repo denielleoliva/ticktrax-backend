@@ -4,6 +4,7 @@ using ticktrax_backend.dtomodels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
 
 namespace ticktrax_backend.Controllers;
 
@@ -31,6 +32,10 @@ public class AuthController : ControllerBase
         this.signInManager = signInManager;
     }
 
+
+    //param: string id
+    //output: string user
+    //description: get a user based on a user id from request
     [HttpGet("{id?}")]
     public async Task<IActionResult> GetUser(string id)
     {
@@ -41,14 +46,23 @@ public class AuthController : ControllerBase
             return new JsonResult(result);
         }
 
-        return BadRequest("user no exist");
+        return BadRequest("User does not exist");
 
     }
 
+
+    //param: UserDto user
+    //output: result userCreated
+    //description: create a new user with username, email, and password
+    //  password should have: 1 uppercase, 1 number, 1 special character
+    //  email should be a valid email
+    //  username should be unique
+    [EnableCors]
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] UserDto user)
     {
         var result = await userService.AddUser(user);
+
 
         if(result.Succeeded)
         {
@@ -70,6 +84,7 @@ public class AuthController : ControllerBase
 
         }
 
+        //If user was not created check if password meets criteria (1 uppercase, 1 number, 1 character)
         return BadRequest("could not make a user");
     }
 

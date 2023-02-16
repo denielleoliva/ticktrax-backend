@@ -12,11 +12,7 @@ namespace ticktrax_backend
                 dbContextOptions.UseMySql(
                     "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
-            services.AddDbContext<TickTraxContext>(dbContextOptions => 
-                dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=userDb; User Id=dan; Password=supersecret!1;",
-                    ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)
-                ));
+            
 
             services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<TickTraxContext>();
@@ -25,6 +21,18 @@ namespace ticktrax_backend
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
+                                            .AllowAnyHeader();
+                                            .AllowAnyMethod();
+                    }
+                )
+            })
 
             
         }
@@ -50,6 +58,8 @@ namespace ticktrax_backend
             app.UseAuthentication();
             
             app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(cfg =>
             {

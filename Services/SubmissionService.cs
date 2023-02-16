@@ -10,9 +10,7 @@ public class SubmissionService : ISubmissionService
 
 
     private TickTraxContext context;
-    /*
 
-    */
     
     public SubmissionService(TickTraxContext _ctx)
     {
@@ -99,10 +97,7 @@ public class SubmissionService : ISubmissionService
     }
 
 
-    public Task<bool> Post(Submission s)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     
 
