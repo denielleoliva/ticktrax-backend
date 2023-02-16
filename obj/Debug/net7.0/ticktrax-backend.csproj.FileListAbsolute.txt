@@ -95,3 +95,16 @@ C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.Extensions.Identity.Core.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.Extensions.Identity.Stores.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Security.Permissions.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.IdentityModel.Logging.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Cors.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Net.Http.Formatting.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Http.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Http.Cors.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Newtonsoft.Json.Bson.dll

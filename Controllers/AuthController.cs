@@ -4,6 +4,13 @@ using ticktrax_backend.dtomodels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Cors;
+
 
 namespace ticktrax_backend.Controllers;
 
@@ -18,17 +25,21 @@ public class AuthController : ControllerBase
     private IEmailService emailService;
     private SignInManager<User> signInManager;
 
+    private readonly IConfiguration _config;
+
     public AuthController(ILogger<AuthController> logger, 
                                 IUserService userService, 
                                 UserManager<User> userManager, 
                                 IEmailService emailService, 
-                                SignInManager<User> signInManager)
+                                SignInManager<User> signInManager,
+                                IConfiguration configuration)
     {
         _logger = logger;
         this.userService = userService;
         this.userManager = userManager;
         this.emailService = emailService;
         this.signInManager = signInManager;
+        _config = configuration;
     }
 
     [HttpGet("{id?}")]
@@ -45,6 +56,7 @@ public class AuthController : ControllerBase
 
     }
 
+    [EnableCors]
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] UserDto user)
     {
@@ -71,6 +83,45 @@ public class AuthController : ControllerBase
         }
 
         return BadRequest("could not make a user");
+    }
+
+    private async Task<string> GenerateToken(User user)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        
+        var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+            _config["Jwt:Audience"],
+            expires: DateTime.Now.AddMinutes(15),
+            signingCredentials: credentials);
+
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+        
+    }
+
+    [HttpPost("signin")]
+    public async Task<IActionResult> SignInUser([FromBody]UserDto user)
+    {
+        User newUser = null;
+
+        if(user.Email!=null)
+        {
+            newUser = await userService.GetUserByEmail(user.Email);
+        }else if(user.UserName!=null){
+            newUser = await userService.GetUserByUserName(user.UserName);
+        }
+
+        if(newUser!=null)
+        {
+            await signInManager.PasswordSignInAsync(newUser, user.Password, false, false);
+            var token = await GenerateToken(newUser);
+            return Ok(token);
+        }
+
+        return NotFound("user not found");
+
+
     }
 
 }

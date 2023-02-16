@@ -19,7 +19,7 @@ public class SubmissionService : ISubmissionService
         context = _ctx;
     }
 
-    public async Task<bool> AddSubmission(SubmissionDto sub)
+    public async Task<bool> AddSubmission(SubmissionDto sub, User currentUser)
     {
         Submission s = new Submission
         {
@@ -27,7 +27,8 @@ public class SubmissionService : ISubmissionService
             Latitude = sub.Latitude,
             Longitude = sub.Longitude,
             Caption = sub.Caption,
-            Time = sub.Time
+            Time = sub.Time,
+            OwnerId = currentUser.Id
         };
         var result = await context.Submissions.AddAsync(s);
         context.SaveChanges();
@@ -99,10 +100,6 @@ public class SubmissionService : ISubmissionService
     }
 
 
-    public Task<bool> Post(Submission s)
-    {
-        throw new NotImplementedException();
-    }
 
     
 

@@ -19,5 +19,8 @@ namespace ticktrax_backend.dtomodels
 
         //[Required]
         public DateTime Time { get; set; }
+
+        //Required
+        public string OwnerId { get; set;}
     }
 }

@@ -4,7 +4,7 @@ using Geolocation;
 
 public interface ISubmissionService
 {
-    Task<bool> AddSubmission(SubmissionDto sub);
+    Task<bool> AddSubmission(SubmissionDto sub, User currentUser);
 
     Task<bool> DeleteSubmission(int id);
 
@@ -16,5 +16,4 @@ public interface ISubmissionService
 
      Task<Submission> GetByLocation(double Longitude, double Latitude);
 
-    Task<bool> Post(Submission s);
 }
