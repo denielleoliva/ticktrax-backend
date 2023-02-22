@@ -147,3 +147,4 @@ C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.
 /home/ticktrax/ticktrax-backend/obj/Debug/net7.0/ticktrax-backend.pdb
 /home/ticktrax/ticktrax-backend/obj/Debug/net7.0/ticktrax-backend.genruntimeconfig.cache
 /home/ticktrax/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.dll
+/home/ticktrax/ticktrax-backend/bin/Debug/net7.0/System.Web.Cors.dll

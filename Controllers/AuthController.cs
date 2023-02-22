@@ -23,13 +23,15 @@ public class AuthController : ControllerBase
                                 IUserService userService, 
                                 UserManager<User> userManager, 
                                 IEmailService emailService, 
-                                SignInManager<User> signInManager)
+                                SignInManager<User> signInManager,
+                                JwtService jwtService)
     {
         _logger = logger;
         this.userService = userService;
         this.userManager = userManager;
         this.emailService = emailService;
         this.signInManager = signInManager;
+        this.jwtService = jwtService;
     }
 
 
@@ -80,12 +82,46 @@ public class AuthController : ControllerBase
 
             // emailService.SendConfirmationEmailAsync(user.Email, "sendemail" + callbackUrl);
 
-            return new JsonResult(newUser);
+            return CreatedAtAction("GetUser", new { username = newUser.username }, newUser);
 
         }
 
         //If user was not created check if password meets criteria (1 uppercase, 1 number, 1 character)
         return BadRequest("could not make a user");
+    }
+
+    private async Task<string> GenerateToken(User user)
+    {
+        var securityKey = new Symme
+    }
+
+
+    [EnableCors]
+    [HttpPost("BearerToken")]
+    public async Task<ActionResult<AuthResponse>> SigninUser([FromBody] request)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest("Bad credentials");
+    }
+
+    var user = await userManager.FindByNameAsync(request.UserName);
+
+    if (user == null)
+    {
+        return BadRequest("Bad credentials");
+    }
+
+    var isPasswordValid = await userManager.CheckPasswordAsync(user, request.Password);
+
+    if (!isPasswordValid)
+    {
+        return BadRequest("Bad credentials");
+    }
+
+    var token = jwtService.CreateToken(user);
+
+        return Ok(token);
     }
 
 }

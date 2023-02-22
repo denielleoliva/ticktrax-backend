@@ -14,13 +14,20 @@ namespace ticktrax_backend
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             
 
-            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, IdentityRole>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLength = 6;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;})
                 .AddEntityFrameworkStores<TickTraxContext>();
 
             services.AddTransient<ISubmissionService, SubmissionService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+            services.AddScoped<ITokenCreationService, JwtService>();
 
             services.AddCors(options =>
             {
@@ -28,11 +35,11 @@ namespace ticktrax_backend
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
-                                            .AllowAnyHeader();
+                                            .AllowAnyHeader()
                                             .AllowAnyMethod();
                     }
-                )
-            })
+                );
+            });
 
             
         }
