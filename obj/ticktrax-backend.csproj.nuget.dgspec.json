@@ -39,12 +39,15 @@
           "targetAlias": "net7.0",
           "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "BCrypt.Net-Next": {
               "target": "Package",
               "version": "[4.0.3, )"
             },
 =======
 >>>>>>> 9d7d9c8a3a2948422e6b18d9e32a34173fda451e
+=======
+>>>>>>> parent of 29955af (cors fix)
             "Microsoft.AspNet.Cors": {
               "target": "Package",
               "version": "[5.2.9, )"

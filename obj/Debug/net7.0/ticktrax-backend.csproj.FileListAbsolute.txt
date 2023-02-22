@@ -109,6 +109,7 @@ C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Http.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Http.Cors.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Newtonsoft.Json.Bson.dll
+<<<<<<< HEAD
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/BCrypt.Net-Next.dll
 =======
 /home/ticktrax/ticktrax-backend/bin/Debug/net7.0/appsettings.Development.json
@@ -165,3 +166,5 @@ C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.
 /home/ticktrax/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.dll
 /home/ticktrax/ticktrax-backend/bin/Debug/net7.0/System.Web.Cors.dll
 >>>>>>> 9d7d9c8a3a2948422e6b18d9e32a34173fda451e
+=======
+>>>>>>> parent of 29955af (cors fix)

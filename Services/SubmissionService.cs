@@ -24,6 +24,7 @@ public class SubmissionService : ISubmissionService
             Photo = sub.Photo,
             Latitude = sub.Latitude,
             Longitude = sub.Longitude,
+            Caption = sub.Caption,
             Time = sub.Time,
             OwnerId = currentUser.Id
         };
@@ -60,6 +61,7 @@ public class SubmissionService : ISubmissionService
             subToUpdate.Photo = sub.Photo;
             subToUpdate.Latitude = sub.Latitude;
             subToUpdate.Longitude = sub.Longitude;
+            subToUpdate.Caption = sub.Caption;
             subToUpdate.Time = sub.Time;
 
             context.Submissions.Update(subToUpdate);

@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Cors;
-using BC = BCrypt.Net.BCrypt;
 
 using Microsoft.AspNetCore.Cors;
 
@@ -92,9 +91,7 @@ public class AuthController : ControllerBase
 
             // emailService.SendConfirmationEmailAsync(user.Email, "sendemail" + callbackUrl);
 
-            
-
-            return Ok(newUser.UserName);
+            return new JsonResult(newUser);
 
         }
 
@@ -117,7 +114,6 @@ public class AuthController : ControllerBase
         
     }
 
-    //Post URL : /auth/signin
     [HttpPost("signin")]
     public async Task<IActionResult> SignInUser([FromBody]UserDto user)
     {
@@ -130,20 +126,15 @@ public class AuthController : ControllerBase
             newUser = await userService.GetUserByUserName(user.UserName);
         }
 
-        if(newUser==null || !BC.Verify(user.Password, newUser.PasswordHash))
+        if(newUser!=null)
         {
-            return BadRequest("username or password not correct");
+            await signInManager.PasswordSignInAsync(newUser, user.Password, false, false);
+            var token = await GenerateToken(newUser);
+            return Ok(token);
         }
 
-        AuthResponse response = new AuthResponse();
+        return NotFound("user not found");
 
-        response.UserName = user.UserName;
-
-        response.Password = user.Password;
-
-        response.Token = await GenerateToken(newUser);
-
-        return new JsonResult(response.Token);        
 
     }
 
