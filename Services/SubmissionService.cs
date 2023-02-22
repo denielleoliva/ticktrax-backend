@@ -10,9 +10,7 @@ public class SubmissionService : ISubmissionService
 
 
     private TickTraxContext context;
-    /*
 
-    */
     
     public SubmissionService(TickTraxContext _ctx)
     {

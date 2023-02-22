@@ -22,21 +22,36 @@ namespace ticktrax_backend
         {
             services.AddDbContext<TickTraxContext>(dbContextOptions =>
                 dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=root;Password=password;", 
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
-            services.AddDbContext<TickTraxContext>(dbContextOptions => 
-                dbContextOptions.UseMySql(
-                    "Server=localhost, 3306;Initial Catalog=userDb; User Id=root; Password=password;",
-                    ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)
-                ));
+            
 
-            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, IdentityRole>(options => {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLength = 6;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;})
                 .AddEntityFrameworkStores<TickTraxContext>();
 
             services.AddTransient<ISubmissionService, SubmissionService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+            services.AddScoped<ITokenCreationService, JwtService>();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    }
+                );
+            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters {

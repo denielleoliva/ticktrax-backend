@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "zwh8fRKXPokk+kpdmm9YhrJsR0I+LaT7adSKmz/AjJc=",
+  "Source": "ticktrax-backend",
+  "BasePath": "_content/ticktrax-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
