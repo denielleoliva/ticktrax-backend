@@ -30,7 +30,6 @@ namespace ticktrax_backend
                 options.SignIn.RequireConfirmedAccount = true;
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
-                options.Password.RequireLength = 6;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;})
                 .AddEntityFrameworkStores<TickTraxContext>();
@@ -39,7 +38,6 @@ namespace ticktrax_backend
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
-            services.AddScoped<ITokenCreationService, JwtService>();
 
             services.AddCors(options =>
             {

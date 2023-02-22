@@ -8,17 +8,9 @@
     ".NETCoreApp,Version=v7.0": {
       "ticktrax-backend/1.0.0": {
         "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "BCrypt.Net-Next": "4.0.3",
-=======
->>>>>>> parent of 29955af (cors fix)
           "Microsoft.AspNet.Cors": "5.2.9",
           "Microsoft.AspNet.WebApi.Cors": "5.2.9",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.2",
-=======
-          "Microsoft.AspNet.Cors": "5.2.9",
->>>>>>> 9d7d9c8a3a2948422e6b18d9e32a34173fda451e
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.2",
           "Microsoft.AspNetCore.OpenApi": "7.0.0",
@@ -60,7 +52,6 @@
           }
         }
       },
-<<<<<<< HEAD
       "Microsoft.AspNet.WebApi.Client/5.2.9": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.2",
@@ -96,8 +87,6 @@
           }
         }
       },
-=======
->>>>>>> 9d7d9c8a3a2948422e6b18d9e32a34173fda451e
       "Microsoft.AspNetCore.Authentication/2.2.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Authentication.Core": "2.2.0",
@@ -1318,7 +1307,6 @@
       "path": "microsoft.aspnet.cors/5.2.9",
       "hashPath": "microsoft.aspnet.cors.5.2.9.nupkg.sha512"
     },
-<<<<<<< HEAD
     "Microsoft.AspNet.WebApi.Client/5.2.9": {
       "type": "package",
       "serviceable": true,
@@ -1340,8 +1328,6 @@
       "path": "microsoft.aspnet.webapi.cors/5.2.9",
       "hashPath": "microsoft.aspnet.webapi.cors.5.2.9.nupkg.sha512"
     },
-=======
->>>>>>> 9d7d9c8a3a2948422e6b18d9e32a34173fda451e
     "Microsoft.AspNetCore.Authentication/2.2.0": {
       "type": "package",
       "serviceable": true,
