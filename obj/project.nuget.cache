@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BvYq01HxVS3hpfWZXGkPL1QDNEWctv1uCquqeUeUDedX4Q5D60xLUIgC3wZJZP9wsBwEvItLnHJE4z7IH+HyPw==",
+  "dgSpecHash": "/cuemLsBnwWdkjzDY95ptrw0KbfQtSI56ZBUC08rti0fqaiFTdFPbQV4IyuULnwZA4s0g8bwYm+JqxBfLCr9SQ==",
   "success": true,
   "projectFilePath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
   "expectedPackageFiles": [
+    "/Users/denielleoliva/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/geolocation/1.2.1/geolocation.1.2.1.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/microsoft.aspnet.cors/5.2.9/microsoft.aspnet.cors.5.2.9.nupkg.sha512",

@@ -20,8 +20,6 @@ namespace ticktrax_backend.Models
         [Required]
         public double Longitude { get; set; }
 
-        [Required]
-        public string Caption { get; set; }
 
         [Required]
         public DateTime Time { get; set; }

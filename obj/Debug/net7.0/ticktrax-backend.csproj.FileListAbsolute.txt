@@ -108,3 +108,4 @@ C:/Users/denie/Documents/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Http.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/System.Web.Http.Cors.dll
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/Newtonsoft.Json.Bson.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/BCrypt.Net-Next.dll

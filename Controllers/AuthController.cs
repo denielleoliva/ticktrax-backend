@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Cors;
+using BC = BCrypt.Net.BCrypt;
 
 
 namespace ticktrax_backend.Controllers;
@@ -78,7 +79,9 @@ public class AuthController : ControllerBase
 
             // emailService.SendConfirmationEmailAsync(user.Email, "sendemail" + callbackUrl);
 
-            return new JsonResult(newUser);
+            
+
+            return Ok(newUser.UserName);
 
         }
 
@@ -100,6 +103,7 @@ public class AuthController : ControllerBase
         
     }
 
+    //Post URL : /auth/signin
     [HttpPost("signin")]
     public async Task<IActionResult> SignInUser([FromBody]UserDto user)
     {
@@ -112,15 +116,20 @@ public class AuthController : ControllerBase
             newUser = await userService.GetUserByUserName(user.UserName);
         }
 
-        if(newUser!=null)
+        if(newUser==null || !BC.Verify(user.Password, newUser.PasswordHash))
         {
-            await signInManager.PasswordSignInAsync(newUser, user.Password, false, false);
-            var token = await GenerateToken(newUser);
-            return Ok(token);
+            return BadRequest("username or password not correct");
         }
 
-        return NotFound("user not found");
+        AuthResponse response = new AuthResponse();
 
+        response.UserName = user.UserName;
+
+        response.Password = user.Password;
+
+        response.Token = await GenerateToken(newUser);
+
+        return new JsonResult(response.Token);        
 
     }
 
