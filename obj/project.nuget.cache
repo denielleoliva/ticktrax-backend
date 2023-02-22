@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BvYq01HxVS3hpfWZXGkPL1QDNEWctv1uCquqeUeUDedX4Q5D60xLUIgC3wZJZP9wsBwEvItLnHJE4z7IH+HyPw==",
+  "dgSpecHash": "UN2b6Puq7iAcA1tJ2Bf4c1yINelBPSaezLsBTjB8UN2xyjLfDPc3wJeNLRkENRnT9vUCnIS482k8QfTyPaX9wg==",
   "success": true,
   "projectFilePath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
   "expectedPackageFiles": [
@@ -155,6 +155,12 @@
     "/Users/denielleoliva/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file /Users/denielleoliva/Documents/UNR/ticktrax-backend/obj/project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",

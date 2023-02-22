@@ -14,6 +14,6 @@ public interface ISubmissionService
 
     Task<Submission> GetById(int id);
 
-     Task<Submission> GetByLocation(double Longitude, double Latitude);
+    Task<Submission> GetByLocation(double Longitude, double Latitude);
 
 }
