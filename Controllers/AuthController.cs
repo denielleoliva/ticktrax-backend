@@ -11,7 +11,6 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Cors;
 
-using Microsoft.AspNetCore.Cors;
 
 namespace ticktrax_backend.Controllers;
 
@@ -126,7 +125,17 @@ public class AuthController : ControllerBase
             newUser = await userService.GetUserByUserName(user.UserName);
         }
 
-        if(newUser!=null)
+        var result = userManager
+                            .PasswordHasher
+                            .VerifyHashedPassword(newUser, 
+                                                    newUser.PasswordHash, 
+                                                    user.Password);
+
+        if(newUser!=null && userManager
+                            .PasswordHasher
+                            .VerifyHashedPassword(newUser, 
+                                                    newUser.PasswordHash, 
+                                                    user.Password) != PasswordVerificationResult.Failed)
         {
             await signInManager.PasswordSignInAsync(newUser, user.Password, false, false);
             var token = await GenerateToken(newUser);

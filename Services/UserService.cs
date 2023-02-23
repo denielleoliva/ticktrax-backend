@@ -78,9 +78,9 @@ public class UserService : IUserService
         }
     }
 
-    public Task<User> GetUserByUserName(string uName)
+    public async Task<User> GetUserByUserName(string uName)
     {
-        var result = context.Users.Where(user => user.UserName == uName).FirstOrDefaultAsync();
+        var result = await context.Users.Where(user => user.UserName == uName).FirstOrDefaultAsync();
 
         if(result!=null)
         {

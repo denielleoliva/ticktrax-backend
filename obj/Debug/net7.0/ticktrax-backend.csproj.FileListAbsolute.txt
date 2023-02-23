@@ -63,3 +63,4 @@
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/obj/Debug/net7.0/ticktrax-backend.pdb
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/obj/Debug/net7.0/ticktrax-backend.genruntimeconfig.cache
 /Users/denielleoliva/Documents/UNR/ticktrax-backend/obj/Debug/net7.0/ref/ticktrax-backend.dll
+/Users/denielleoliva/Documents/UNR/ticktrax-backend/bin/Debug/net7.0/BCrypt.Net.dll

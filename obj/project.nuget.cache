@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UN2b6Puq7iAcA1tJ2Bf4c1yINelBPSaezLsBTjB8UN2xyjLfDPc3wJeNLRkENRnT9vUCnIS482k8QfTyPaX9wg==",
+  "dgSpecHash": "D332Q+GrpRm7S5xbVf/W2QRztw6HtMYaxjY+XdY+gXvZgt/CggKcH4WiiPiwdPdadezSuSRI4unC1dwBBjh0Fw==",
   "success": true,
   "projectFilePath": "/Users/denielleoliva/Documents/UNR/ticktrax-backend/ticktrax-backend.csproj",
   "expectedPackageFiles": [
+    "/Users/denielleoliva/.nuget/packages/bcrypt.net/0.1.0/bcrypt.net.0.1.0.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/geolocation/1.2.1/geolocation.1.2.1.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/denielleoliva/.nuget/packages/microsoft.aspnet.cors/5.2.9/microsoft.aspnet.cors.5.2.9.nupkg.sha512",
@@ -155,6 +156,16 @@
     "/Users/denielleoliva/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'BCrypt.Net 0.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "BCrypt.Net",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",
