@@ -21,13 +21,11 @@ namespace ticktrax_backend.Models
         public double Longitude { get; set; }
 
         [Required]
-        public string Caption { get; set; }
-
-        [Required]
         public DateTime Time { get; set; }
 
         public User Owner { get; set; }
 
+        [Required]
         public string OwnerId { get; set; }
     }
 }

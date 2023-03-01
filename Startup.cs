@@ -4,7 +4,7 @@ using ticktrax_backend.Data;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-
+using System.Security.Claims;
 
 namespace ticktrax_backend
 {
@@ -22,7 +22,7 @@ namespace ticktrax_backend
         {
             services.AddDbContext<TickTraxContext>(dbContextOptions =>
                 dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             
 
@@ -64,6 +64,9 @@ namespace ticktrax_backend
                 });
 
             services.AddAuthorization();
+
+            services.AddScoped<ClaimsPrincipal>(s =>
+                s.GetService<IHttpContextAccessor>().HttpContext.User);
 
             services.AddCors(options =>
             {

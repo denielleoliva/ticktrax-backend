@@ -13,11 +13,6 @@ namespace ticktrax_backend.dtomodels
         public double Longitude { get; set; }
 
         //[Required]
-        //[MaxLength(150)]
-        //[MinLength(3)]
-        public string Caption { get; set; }
-
-        //[Required]
         public DateTime Time { get; set; }
 
         //Required

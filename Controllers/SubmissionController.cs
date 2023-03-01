@@ -18,10 +18,15 @@ public class SubmissionController : ControllerBase
 
     private UserManager<User> userManager;
 
-    public SubmissionController(ILogger<SubmissionController> logger, ISubmissionService submissionService, UserManager<User> userManager)
+
+    public SubmissionController(ILogger<SubmissionController> logger, 
+        ISubmissionService submissionService, 
+        UserManager<User> userManager, 
+        IUserService userService)
     {
         _logger = logger;
         this.submissionService = submissionService;
+        this.userService = userService;
         this.userManager = userManager;
     }
     
@@ -58,24 +63,30 @@ public class SubmissionController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Post([FromBody]SubmissionDto s)
     {
+
         if(!ModelState.IsValid){
             return BadRequest("garbage");
         }else{
-            string currentUser = await GetCurrentUser();
-            User usrname = await userService.GetUserById(currentUser);
-            submissionService.AddSubmission(s,usrname);
+            string user = HttpContext.User.Claims.First(c => c.Type == "UserName").Value;
+            User currentUser = await userService.GetUserByUserName(user);
+            await submissionService.AddSubmission(s,currentUser);
 
             return Ok("posting...");
         }
     }
 
-    public async Task<string> GetCurrentUser()
+    public async Task<User> GetUser(ClaimsPrincipal cp)
     {
-        User currentUser = await GetCurrentUserAsync();
-        return currentUser?.Id;
+
+        var email = cp.FindFirst(ClaimTypes.Email).Value;
+
+        User user = await userManager.FindByEmailAsync(email);
+
+        return user;
+
     }
 
-    private Task<User> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
+
 
     
     
