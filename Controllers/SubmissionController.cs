@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using ticktrax_backend.Models;
 using ticktrax_backend.dtomodels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ticktrax_backend.Controllers;
 
@@ -14,10 +16,13 @@ public class SubmissionController : ControllerBase
     private ISubmissionService submissionService;
     private IUserService userService;
 
-    public SubmissionController(ILogger<SubmissionController> logger, ISubmissionService submissionService)
+    private UserManager<User> userManager;
+
+    public SubmissionController(ILogger<SubmissionController> logger, ISubmissionService submissionService, UserManager<User> userManager)
     {
         _logger = logger;
         this.submissionService = submissionService;
+        this.userManager = userManager;
     }
     
     [HttpGet]
@@ -50,19 +55,27 @@ public class SubmissionController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Post([FromBody]SubmissionDto s)
     {
         if(!ModelState.IsValid){
             return BadRequest("garbage");
         }else{
-            string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var currentUser = await userService.GetUserById(userId);
-            submissionService.AddSubmission(s,currentUser);
+            string currentUser = await GetCurrentUser();
+            User usrname = await userService.GetUserById(currentUser);
+            submissionService.AddSubmission(s,usrname);
 
             return Ok("posting...");
         }
     }
 
+    public async Task<string> GetCurrentUser()
+    {
+        User currentUser = await GetCurrentUserAsync();
+        return currentUser?.Id;
+    }
+
+    private Task<User> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
 
     
     

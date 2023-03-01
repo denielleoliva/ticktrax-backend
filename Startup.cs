@@ -63,6 +63,8 @@ namespace ticktrax_backend
                 };
                 });
 
+            services.AddAuthorization();
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -104,6 +106,7 @@ namespace ticktrax_backend
             app.UseAuthentication();
             
             app.UseAuthorization();
+
 
             app.UseCors();
 

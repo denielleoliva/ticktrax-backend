@@ -74,9 +74,11 @@ public class AuthController : ControllerBase
         var result = await userService.AddUser(user);
 
 
+
         if(result.Succeeded)
         {
             User newUser = await userService.GetUserByEmail(user.Email);
+
 
             _logger.LogInformation("User created new account with password.");
 
@@ -102,11 +104,18 @@ public class AuthController : ControllerBase
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        List<Claim> userClaims = new List<Claim> {
+            new Claim("UserName", user.UserName),
+            new Claim("Email", user.Email)
+        };
         
-        var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-            _config["Jwt:Audience"],
-            expires: DateTime.Now.AddMinutes(15),
-            signingCredentials: credentials);
+        var token = new JwtSecurityToken(
+            _config["Jwt:Issuer"], 
+            _config["Jwt:Audience"], 
+            userClaims, 
+            DateTime.UtcNow, 
+            DateTime.Now.AddDays(5), 
+            credentials);
 
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -139,12 +148,79 @@ public class AuthController : ControllerBase
         {
             await signInManager.PasswordSignInAsync(newUser, user.Password, false, false);
             var token = await GenerateToken(newUser);
-            return Ok(token);
+            ClaimsPrincipal userClaims = new ClaimsPrincipal();
+            HttpContext.User = await signInManager.CreateUserPrincipalAsync(newUser);
+            return new JsonResult(token);
         }
 
         return NotFound("user not found");
 
 
     }
+
+    public async Task<IActionResult> AddRole(string email, string roleName)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+
+        if(user!=null)
+        {
+            var result = await userManager.AddToRoleAsync(user, roleName);
+
+            if(result.Succeeded)
+            {
+                _logger.LogInformation(1, $"User {user.Email} added to the {roleName} role");
+                return Ok(new {result = $"User {user.Email} added to the {roleName} role"});
+            }else
+            {
+                _logger.LogInformation (1, $"Error: Unable to add user {user.Email} to the {roleName} role");
+                return BadRequest(new {error = $"Error: Unable to add user {user.Email} to the {roleName} role"});
+            }
+
+           
+        }
+    
+        return BadRequest(new {error = $"Error: Unable to find user"});
+
+    }
+
+    public async Task<IActionResult> GetUserRoles(string email)
+    {
+        var user = await userManager.FindByEmailAsync(email);
+
+        var roles = await userManager.GetRolesAsync(user);
+
+        return Ok(roles);
+    }
+
+    public async Task<IActionResult> RemoveRole(string email, string roleName)
+    {
+
+        var user = await userManager.FindByEmailAsync(email);
+
+        if(user != null)
+        {
+            var result = await userManager.RemoveFromRoleAsync(user, roleName);
+
+            if(result.Succeeded)
+            {
+                _logger.LogInformation (1, $"User {user.Email} removed from the {roleName} role");
+                return Ok(new {result = $"User {user.Email} removed from the {roleName} role"});
+            }
+            else
+            {
+                _logger.LogInformation (1, $"Error: Unable to removed user {user.Email} from the {roleName} role");
+                return BadRequest(new {error = $"Error: Unable to removed user {user.Email} from the {roleName} role"});
+            }
+        }
+
+            // User doesn't exist
+        return BadRequest(new {error = "Unable to find user"});
+
+    }
+
+
+
+
+
 
 }
