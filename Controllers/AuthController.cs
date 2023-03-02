@@ -158,65 +158,6 @@ public class AuthController : ControllerBase
 
     }
 
-    public async Task<IActionResult> AddRole(string email, string roleName)
-    {
-        var user = await userManager.FindByEmailAsync(email);
-
-        if(user!=null)
-        {
-            var result = await userManager.AddToRoleAsync(user, roleName);
-
-            if(result.Succeeded)
-            {
-                _logger.LogInformation(1, $"User {user.Email} added to the {roleName} role");
-                return Ok(new {result = $"User {user.Email} added to the {roleName} role"});
-            }else
-            {
-                _logger.LogInformation (1, $"Error: Unable to add user {user.Email} to the {roleName} role");
-                return BadRequest(new {error = $"Error: Unable to add user {user.Email} to the {roleName} role"});
-            }
-
-           
-        }
-    
-        return BadRequest(new {error = $"Error: Unable to find user"});
-
-    }
-
-    public async Task<IActionResult> GetUserRoles(string email)
-    {
-        var user = await userManager.FindByEmailAsync(email);
-
-        var roles = await userManager.GetRolesAsync(user);
-
-        return Ok(roles);
-    }
-
-    public async Task<IActionResult> RemoveRole(string email, string roleName)
-    {
-
-        var user = await userManager.FindByEmailAsync(email);
-
-        if(user != null)
-        {
-            var result = await userManager.RemoveFromRoleAsync(user, roleName);
-
-            if(result.Succeeded)
-            {
-                _logger.LogInformation (1, $"User {user.Email} removed from the {roleName} role");
-                return Ok(new {result = $"User {user.Email} removed from the {roleName} role"});
-            }
-            else
-            {
-                _logger.LogInformation (1, $"Error: Unable to removed user {user.Email} from the {roleName} role");
-                return BadRequest(new {error = $"Error: Unable to removed user {user.Email} from the {roleName} role"});
-            }
-        }
-
-            // User doesn't exist
-        return BadRequest(new {error = "Unable to find user"});
-
-    }
 
 
 
