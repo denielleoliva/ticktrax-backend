@@ -86,6 +86,7 @@ public class SubmissionController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Post([FromBody]SubmissionDto s)
     {
+        string filePath = s.Time + Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
         if(!ModelState.IsValid){
             return BadRequest("garbage");
@@ -111,7 +112,6 @@ public class SubmissionController : ControllerBase
 
         System.IO.File.WriteAllBytes(filePath, Convert.FromBase64String(img));
 
-        
         return true;
 
     }
