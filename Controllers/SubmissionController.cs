@@ -86,17 +86,18 @@ public class SubmissionController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Post([FromBody]SubmissionDto s)
     {
-        string filePath = s.Time + Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        string fileName = s.Time + Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
         if(!ModelState.IsValid){
             return BadRequest("garbage");
         }else{
+
             string user = HttpContext.User.Claims.First(c => c.Type == "UserName").Value;
             User currentUser = await userService.GetUserByUserName(user);
             await submissionService.AddSubmission(s,currentUser);
-            await DownloadImage(s.Photo, "/Users/denielleoliva/Documents/img.png");
+            await DownloadImage(s.Photo, "../photos_ticktrax/imgtest.png");
 
-            return Ok("posting...");
+            return Ok("saved post...");
         }
     }
 
