@@ -50,7 +50,7 @@ public class SubmissionController : ControllerBase
     //param: int id
     //output: IActionResult submission
     //description: get a specific submission with an id
-    [HttpGet("{id}")]
+    [HttpGet("id/{id}")]
     public async Task<IActionResult> GetIt(int id)
     {
         var result = await submissionService.GetById(id);
@@ -86,7 +86,7 @@ public class SubmissionController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Post([FromBody]SubmissionDto s)
     {
-        string fileName = s.Time + Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        string fileName = s.FileName + "." + s.FileType;
 
         if(!ModelState.IsValid){
             return BadRequest("garbage");
@@ -95,10 +95,26 @@ public class SubmissionController : ControllerBase
             string user = HttpContext.User.Claims.First(c => c.Type == "UserName").Value;
             User currentUser = await userService.GetUserByUserName(user);
             await submissionService.AddSubmission(s,currentUser);
-            await DownloadImage(s.Photo, "../photos_ticktrax/imgtest.png");
+            await DownloadImage(s.Photo, "/Users/denielleoliva/Documents/"+fileName);
+            //await DownloadImage(s.Photo, "../photos_ticktrax/imgtest.png");
 
             return Ok("saved post...");
         }
+    }
+
+
+    //param: string fileName
+    //output: IActionResult photo
+    //description: get a photo from the database to the frontend
+    //  return an image based on a filename
+    [HttpGet("{fileName}")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public IActionResult GetUserPhoto(string fileName)
+    {
+
+        byte [] imageRead = System.IO.File.ReadAllBytes("/Users/denielleoliva/Documents/"+fileName);
+        return File(imageRead, "image/png");
+
     }
 
 
@@ -107,11 +123,10 @@ public class SubmissionController : ControllerBase
     //description: image is downloaded from the base64 string in the json file
     //  converted from the base64 string from the http response
     //  image should be saved on the file path
-    public async Task<bool> DownloadImage(string img, string filePath)
+    public async Task<bool> DownloadImage(byte[] img, string filePath)
     {
-        byte[] imageBytes = Convert.FromBase64String(img);
 
-        System.IO.File.WriteAllBytes(filePath, Convert.FromBase64String(img));
+        System.IO.File.WriteAllBytes(filePath, img);
 
         return true;
 

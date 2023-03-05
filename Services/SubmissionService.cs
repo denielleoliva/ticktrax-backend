@@ -22,6 +22,8 @@ public class SubmissionService : ISubmissionService
         Submission s = new Submission
         {
             Photo = sub.Photo,
+            FileName = sub.FileName,
+            FileType = sub.FileType,
             Latitude = sub.Latitude,
             Longitude = sub.Longitude,
             Time = sub.Time,
@@ -58,6 +60,8 @@ public class SubmissionService : ISubmissionService
         if(subToUpdate != null)
         {
             subToUpdate.Photo = sub.Photo;
+            subToUpdate.FileName = sub.FileName;
+            subToUpdate.FileType = sub.FileType;
             subToUpdate.Latitude = sub.Latitude;
             subToUpdate.Longitude = sub.Longitude;
             subToUpdate.Time = sub.Time;

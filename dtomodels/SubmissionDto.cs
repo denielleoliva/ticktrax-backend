@@ -5,7 +5,11 @@ namespace ticktrax_backend.dtomodels
     public class SubmissionDto
     {
         //[Required]
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
+
+        public string FileName { get; set; }
+
+        public string FileType { get; set; }
 
         //[Required]
         public double Latitude { get; set; }

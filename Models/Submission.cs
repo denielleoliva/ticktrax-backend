@@ -12,7 +12,13 @@ namespace ticktrax_backend.Models
         public int Id { get; set; }
 
         [Required]
-        public string Photo { get; set; }
+        public byte[] Photo { get; set; }
+
+        [Required]
+        public string FileName { get; set; }
+
+        [Required]
+        public string FileType { get; set; }
 
         [Required]
         public double Latitude { get; set; }
