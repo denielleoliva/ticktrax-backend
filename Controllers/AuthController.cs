@@ -100,6 +100,9 @@ public class AuthController : ControllerBase
         return BadRequest("could not make a user");
     }
 
+    //param: User user
+    //output: Jwt token created
+    //description: generate a token for user authentication on login
     private async Task<string> GenerateToken(User user)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -122,6 +125,9 @@ public class AuthController : ControllerBase
         
     }
 
+    //param: UserDto user
+    //output: user signed in
+    //description: check user credentials and login user if token is valid
     [HttpPost("signin")]
     public async Task<IActionResult> SignInUser([FromBody]UserDto user)
     {

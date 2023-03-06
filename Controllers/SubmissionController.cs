@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using ticktrax_backend.Models;
 using ticktrax_backend.dtomodels;
+using ticktrax_backend.Data;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Drawing;
 using System.IO;
+using System.Data;
+using System.Text;
+using System.ComponentModel;
 
 namespace ticktrax_backend.Controllers;
 
@@ -19,6 +23,8 @@ public class SubmissionController : ControllerBase
     private IUserService userService;
 
     private UserManager<User> userManager;
+
+    private readonly TickTraxContext context;
 
     //param: 
     //output: constructor
@@ -95,8 +101,8 @@ public class SubmissionController : ControllerBase
             string user = HttpContext.User.Claims.First(c => c.Type == "UserName").Value;
             User currentUser = await userService.GetUserByUserName(user);
             await submissionService.AddSubmission(s,currentUser);
-            await DownloadImage(s.Photo, "/Users/denielleoliva/Documents/"+fileName);
-            //await DownloadImage(s.Photo, "../photos_ticktrax/imgtest.png");
+            //await DownloadImage(s.Photo, "/Users/denielleoliva/Documents/"+fileName);
+            await DownloadImage(s.Photo, "../photos_ticktrax/imgtest.png");
 
             return Ok("saved post...");
         }
@@ -111,10 +117,8 @@ public class SubmissionController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer")]
     public IActionResult GetUserPhoto(string fileName)
     {
-
-        byte [] imageRead = System.IO.File.ReadAllBytes("/Users/denielleoliva/Documents/"+fileName);
+        byte [] imageRead = System.IO.File.ReadAllBytes("../photos_ticktrax/"+fileName);
         return File(imageRead, "image/png");
-
     }
 
 
@@ -131,6 +135,60 @@ public class SubmissionController : ControllerBase
         return true;
 
     }
+
+
+    //--------------------------TESTING (NOT WORKING YET)----------------------------------
+
+    // [HttpGet("submissionreport")]
+    // [Authorize(AuthenticationSchemes = "Bearer")]
+    // public IActionResult DownloadCsv()
+    // {
+    //     PropertyDescriptorCollection properties = 
+    //         TypeDescriptor.GetProperties(typeof(Submission));
+
+    //     DataTable table = new DataTable();
+
+    //     foreach(PropertyDescriptor prop in properties)
+    //     {
+    //         table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+    //     }
+
+    //     foreach(Submission submission in context.Submissions)
+    //     {
+    //         DataRow row = table.NewRow();
+    //         foreach(PropertyDescriptor prop in properties)
+    //         {
+    //             row[prop.Name] = prop.GetValue(submission) ?? DBNull.Value;
+    //         }
+    //         table.Rows.Add(row);
+    //     }
+
+    //     return File(ExportData(table), "text/csv");
+    // }
+
+    // public static string ExportData(DataTable table)
+    // {
+    //     StringBuilder csvData = new StringBuilder();
+
+    //     foreach(var col in table.Columns)
+    //     {
+    //         csvData.Append(col.ToString() + ",");
+    //     }
+
+    //     csvData.Replace(",", System.Environment.NewLine, csvData.Length - 1, 1);
+
+    //     foreach(DataRow row in table.Rows)
+    //     {
+    //         foreach(var col in row.ItemArray)
+    //         {
+    //             csvData.Append("\"" + col.ToString() + "\",");
+    //         }
+
+    //         csvData.Replace("," , System.Environment.NewLine, csvData.Length - 1, 1);
+    //     }
+
+    //     return csvData.ToString();
+    // }
 
 
 
