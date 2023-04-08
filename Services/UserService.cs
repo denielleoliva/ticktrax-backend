@@ -5,6 +5,8 @@ using ticktrax_backend.Data;
 using ticktrax_backend.dtomodels;
 using Geolocation;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 public class UserService : IUserService
 {
@@ -12,11 +14,14 @@ public class UserService : IUserService
 
     private TickTraxContext context;
     private UserManager<User> manager;
+
+    private RoleManager<IdentityRole> roleManager;
     
     public UserService(TickTraxContext _ctx, UserManager<User> _mng)
     {
         context = _ctx;
         manager = _mng;
+
     }
 
     public async Task<IdentityResult> AddUser(UserDto user)
@@ -30,8 +35,22 @@ public class UserService : IUserService
 
         var result = await manager.CreateAsync(newUser, user.Password);
 
+        if (result.Succeeded)  
+        {  
+            var defaultrole = roleManager.FindByNameAsync("Default").Result;  
+
+            if (defaultrole != null)  
+            {  
+              IdentityResult roleresult = await  manager.AddToRoleAsync(newUser, defaultrole.Name);  
+            }  
+
+    
+        }
+
         return result;
+
     }
+
 
     public async Task<bool> DeleteUser(string id)
     {

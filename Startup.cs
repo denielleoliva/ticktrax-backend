@@ -23,16 +23,16 @@ namespace ticktrax_backend
         public void ConfigureServices(IServiceCollection services)
         {
             //Uncomment for VM Usage
-            services.AddDbContext<TickTraxContext>(dbContextOptions =>
-                dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
-                    ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
-
-            //Uncomment for Personal dev environment usage
             // services.AddDbContext<TickTraxContext>(dbContextOptions =>
             //     dbContextOptions.UseMySql(
-            //         "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+            //         "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
             //         ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
+
+            //Uncomment for Personal dev environment usage
+            services.AddDbContext<TickTraxContext>(dbContextOptions =>
+                dbContextOptions.UseMySql(
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+                    ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             
 
             services.AddIdentity<User, IdentityRole>(options => {
@@ -41,6 +41,7 @@ namespace ticktrax_backend
                 options.Password.RequireDigit = true;
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;})
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<TickTraxContext>();
 
             services.AddTransient<ISubmissionService, SubmissionService>();
@@ -76,7 +77,7 @@ namespace ticktrax_backend
             services.AddScoped<ClaimsPrincipal>(s =>
                 s.GetService<IHttpContextAccessor>().HttpContext.User);
 
-    
+            
 
             
 
@@ -86,7 +87,7 @@ namespace ticktrax_backend
             
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
 
             if (env.IsDevelopment())
@@ -119,62 +120,47 @@ namespace ticktrax_backend
                     pattern: "/{controller=Home}/{action=Index}/{id?}");
             });
 
+            CreateRoles(serviceProvider).Wait();
 
-            
         }
 
-        // private void createRolesandUsers()    
-        // {    
-        //     DbContext context = new DbContext();    
-        
-        //     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));    
-        //     var UserManager = new UserManager<User>(new UserStore<User>(context));    
-        
-        
-        //     // In Startup iam creating first Admin Role and creating a default Admin User     
-        //     if (!roleManager.RoleExists("Admin"))    
-        //     {    
-        
-        //         // first we create Admin rool    
-        //         var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();    
-        //         role.Name = "Admin";    
-        //         roleManager.Create(role);    
-        
-        //         //Here we create a Admin super user who will maintain the website                   
-        
-        //         var user = new ApplicationUser();    
-        //         user.UserName = "shanu";    
-        //         user.Email = "syedshanumcain@gmail.com";    
-        
-        //         string userPWD = "A@Z200711";    
-        
-        //         var chkUser = UserManager.Create(user, userPWD);    
-        
-        //         //Add default User to Role Admin    
-        //         if (chkUser.Succeeded)    
-        //         {    
-        //             var result1 = UserManager.AddToRole(user.Id, "Admin");    
-        
-        //         }    
-        //     }    
-        
-        //     // creating Creating Manager role     
-        //     if (!roleManager.RoleExists("Manager"))    
-        //     {    
-        //         var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();    
-        //         role.Name = "Manager";    
-        //         roleManager.Create(role);    
-        
-        //     }    
-        
-        //     // creating Creating Employee role     
-        //     if (!roleManager.RoleExists("Employee"))    
-        //     {    
-        //         var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();    
-        //         role.Name = "Employee";    
-        //         roleManager.Create(role);    
-        
-        //     }    
-        //    }  
-    }
-}
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            string[] roleNames = { "Admin", "Manager", "Member" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            //Here you could create a super user who will maintain the web app
+            var poweruser = new User
+            {
+                UserName = "admin",
+                Email = "admin@admin.com",
+            };
+
+            string userPWD = "Admintest1!";
+            var _user = await UserManager.FindByEmailAsync("admin@admin.com");
+
+            if(_user == null)
+            {
+                    var createPowerUser = await UserManager.CreateAsync(poweruser, userPWD);
+                    if (createPowerUser.Succeeded)
+                    {
+                        //here we tie the new user to the role
+                        await UserManager.AddToRoleAsync(poweruser, "Admin");
+
+                    }
+            }
+        }
+    }}

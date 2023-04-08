@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Cors;
 
@@ -139,10 +140,18 @@ public class AuthController : ControllerBase
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
         List<Claim> userClaims = new List<Claim> {
             new Claim("UserName", user.UserName),
-            new Claim("Email", user.Email)
+            new Claim("Email", user.Email),
         };
+
+        var userRoles = await userManager.GetRolesAsync(user);
+
+        if(userRoles!=null)
+        {
+            userClaims.Add(new Claim(ClaimTypes.Role, userRoles.First()));
+        }
         
         var token = new JwtSecurityToken(
             _config["Jwt:Issuer"], 
@@ -156,6 +165,10 @@ public class AuthController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
         
     }
+
+    
+
+    
 
     //param: UserDto user
     //output: user signed in
