@@ -60,6 +60,34 @@ public class AuthController : ControllerBase
 
     }
 
+    [HttpGet("/user/{username?}")]
+    public async Task<IActionResult> GetUserByName(string userName)
+    {
+        var result = await userService.GetUserByUserName(userName);
+        
+        if(result!=null)
+        {
+            return new JsonResult(result);
+        }
+
+        return BadRequest("User does not exist");
+
+    }
+
+    [HttpGet("/email/{email?}")]
+    public async Task<IActionResult> GetUserByEmail(string email)
+    {
+        var result = await userService.GetUserByEmail(email);
+        
+        if(result!=null)
+        {
+            return new JsonResult(result);
+        }
+
+        return BadRequest("User does not exist");
+
+    }
+
 
     //param: UserDto user
     //output: result userCreated
@@ -71,9 +99,12 @@ public class AuthController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] UserDto user)
     {
+        // if(userService.GetUserByEmail(user.Email)==null)
+        // {
+        //     return BadRequest("UserName or Email already in use");
+        // }
+
         var result = await userService.AddUser(user);
-
-
 
         if(result.Succeeded)
         {
@@ -99,6 +130,7 @@ public class AuthController : ControllerBase
         //If user was not created check if password meets criteria (1 uppercase, 1 number, 1 character)
         return BadRequest("could not make a user");
     }
+
 
     //param: User user
     //output: Jwt token created
@@ -163,6 +195,16 @@ public class AuthController : ControllerBase
 
 
     }
+
+    [HttpGet("signout")]
+    public async Task<IActionResult> SignOut()
+    {
+        await signInManager.SignOutAsync();
+
+        return Ok("signing out...");
+    }
+
+  
 
 
 

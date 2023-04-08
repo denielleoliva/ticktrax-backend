@@ -10,6 +10,7 @@ using System.IO;
 using System.Data;
 using System.Text;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Cors;
 
 namespace ticktrax_backend.Controllers;
 
@@ -24,7 +25,6 @@ public class SubmissionController : ControllerBase
 
     private UserManager<User> userManager;
 
-    private readonly TickTraxContext context;
 
     //param: 
     //output: constructor
@@ -102,7 +102,7 @@ public class SubmissionController : ControllerBase
             User currentUser = await userService.GetUserByUserName(user);
             await submissionService.AddSubmission(s,currentUser);
             //await DownloadImage(s.Photo, "/Users/denielleoliva/Documents/"+fileName);
-            await DownloadImage(s.Photo, "../photos_ticktrax/imgtest.png");
+            await DownloadImage(s.Photo, "../photos_ticktrax/" + fileName);
 
             return Ok("saved post...");
         }
@@ -133,7 +133,6 @@ public class SubmissionController : ControllerBase
         System.IO.File.WriteAllBytes(filePath, img);
 
         return true;
-
     }
 
 

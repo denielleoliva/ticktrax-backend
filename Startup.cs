@@ -18,19 +18,21 @@ namespace ticktrax_backend
         }
 
 
+        
+
         public void ConfigureServices(IServiceCollection services)
         {
             //Uncomment for VM Usage
-            // services.AddDbContext<TickTraxContext>(dbContextOptions =>
-            //     dbContextOptions.UseMySql(
-            //         "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
-            //         ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
-
-            //Uncomment for Personal dev environment usage
             services.AddDbContext<TickTraxContext>(dbContextOptions =>
                 dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
+
+            //Uncomment for Personal dev environment usage
+            // services.AddDbContext<TickTraxContext>(dbContextOptions =>
+            //     dbContextOptions.UseMySql(
+            //         "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+            //         ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             
 
             services.AddIdentity<User, IdentityRole>(options => {
@@ -47,16 +49,15 @@ namespace ticktrax_backend
             services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 
             services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
                     {
-                        builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod();
-                    }
-                );
-            });
+                        options.AddDefaultPolicy(
+                            builder =>
+                            {
+                                builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
+                                                    .AllowAnyHeader()
+                                                    .AllowAnyMethod();
+                            });
+                    });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters {
@@ -75,16 +76,7 @@ namespace ticktrax_backend
             services.AddScoped<ClaimsPrincipal>(s =>
                 s.GetService<IHttpContextAccessor>().HttpContext.User);
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod();
-                    });
-            });
+    
 
             
 
@@ -130,5 +122,59 @@ namespace ticktrax_backend
 
             
         }
+
+        // private void createRolesandUsers()    
+        // {    
+        //     DbContext context = new DbContext();    
+        
+        //     var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));    
+        //     var UserManager = new UserManager<User>(new UserStore<User>(context));    
+        
+        
+        //     // In Startup iam creating first Admin Role and creating a default Admin User     
+        //     if (!roleManager.RoleExists("Admin"))    
+        //     {    
+        
+        //         // first we create Admin rool    
+        //         var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();    
+        //         role.Name = "Admin";    
+        //         roleManager.Create(role);    
+        
+        //         //Here we create a Admin super user who will maintain the website                   
+        
+        //         var user = new ApplicationUser();    
+        //         user.UserName = "shanu";    
+        //         user.Email = "syedshanumcain@gmail.com";    
+        
+        //         string userPWD = "A@Z200711";    
+        
+        //         var chkUser = UserManager.Create(user, userPWD);    
+        
+        //         //Add default User to Role Admin    
+        //         if (chkUser.Succeeded)    
+        //         {    
+        //             var result1 = UserManager.AddToRole(user.Id, "Admin");    
+        
+        //         }    
+        //     }    
+        
+        //     // creating Creating Manager role     
+        //     if (!roleManager.RoleExists("Manager"))    
+        //     {    
+        //         var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();    
+        //         role.Name = "Manager";    
+        //         roleManager.Create(role);    
+        
+        //     }    
+        
+        //     // creating Creating Employee role     
+        //     if (!roleManager.RoleExists("Employee"))    
+        //     {    
+        //         var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();    
+        //         role.Name = "Employee";    
+        //         roleManager.Create(role);    
+        
+        //     }    
+        //    }  
     }
 }
