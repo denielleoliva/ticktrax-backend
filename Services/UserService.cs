@@ -31,7 +31,9 @@ public class UserService : IUserService
         User newUser = new User
         {
             UserName = user.UserName,
-            Email = user.Email
+            Email = user.Email,
+            FirstName = user.FirstName,
+            LastName = user.LastName
         };
 
         if(user.ProfilePhoto.Length>0)
@@ -39,7 +41,7 @@ public class UserService : IUserService
             if(user.ProfilePhoto.Length>2097152)
             {
                 newUser.ProfilePhoto = user.ProfilePhoto;
-                
+
             }else{
                 throw new Exception("file is too large");
             }
