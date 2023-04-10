@@ -90,6 +90,25 @@ public class AuthController : ControllerBase
     }
 
 
+    [HttpGet("/user/{username?}/profilephoto")]
+    public async Task<IActionResult> GetUserPhoto(string username)
+    {
+        var result = await userService.GetUserByUserName(username);
+
+        if(result!=null)
+        {
+            if(result.ProfilePhoto!=null)
+            {
+                return new JsonResult(result.ProfilePhoto);
+            }else
+            {
+                return BadRequest("no profile photo associated with user");
+            }
+        }
+
+        return BadRequest("User not found");
+    }
+
     //param: UserDto user
     //output: result userCreated
     //description: create a new user with username, email, and password
@@ -106,6 +125,8 @@ public class AuthController : ControllerBase
         // }
 
         var result = await userService.AddUser(user);
+
+        System.IO.File.WriteAllBytes("../ticktrax/users/"+user.UserName,user.ProfilePhoto);
 
         if(result.Succeeded)
         {
@@ -132,6 +153,14 @@ public class AuthController : ControllerBase
         return BadRequest("could not make a user");
     }
 
+    [HttpPost("/update")]
+    public async Task<IActionResult> UpdateUserInformation(User user)
+    {
+        await userService.UpdateUser(user);
+
+        return Ok("user updated");
+    }
+
 
     //param: User user
     //output: Jwt token created
@@ -148,7 +177,7 @@ public class AuthController : ControllerBase
 
         var userRoles = await userManager.GetRolesAsync(user);
 
-        if(userRoles!=null)
+        if(userRoles.Count != 0)
         {
             userClaims.Add(new Claim(ClaimTypes.Role, userRoles.First()));
         }
@@ -166,9 +195,6 @@ public class AuthController : ControllerBase
         
     }
 
-    
-
-    
 
     //param: UserDto user
     //output: user signed in
@@ -216,13 +242,6 @@ public class AuthController : ControllerBase
 
         return Ok("signing out...");
     }
-
-  
-
-
-
-
-
 
 
 }

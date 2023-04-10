@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ticktrax_backend.Data;
 
@@ -10,9 +11,11 @@ using ticktrax_backend.Data;
 namespace ticktraxbackend.Migrations
 {
     [DbContext(typeof(TickTraxContext))]
-    partial class TickTraxContextModelSnapshot : ModelSnapshot
+    [Migration("20230409225712_profilePhoto")]
+    partial class profilePhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,10 +191,6 @@ namespace ticktraxbackend.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<byte[]>("ProfilePhoto")
-                        .IsRequired()
-                        .HasColumnType("longblob");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");

@@ -7,6 +7,7 @@ using Geolocation;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.IO;
 
 public class UserService : IUserService
 {
@@ -33,6 +34,17 @@ public class UserService : IUserService
             Email = user.Email
         };
 
+        if(user.ProfilePhoto.Length>0)
+        {
+            if(user.ProfilePhoto.Length>2097152)
+            {
+                newUser.ProfilePhoto = user.ProfilePhoto;
+                
+            }else{
+                throw new Exception("file is too large");
+            }
+        }
+
         var result = await manager.CreateAsync(newUser, user.Password);
 
         if (result.Succeeded)  
@@ -49,6 +61,15 @@ public class UserService : IUserService
 
         return result;
 
+    }
+
+    public async Task<bool> UpdateUser(User user)
+    {
+        await manager.UpdateAsync(user);
+
+        await context.SaveChangesAsync();
+
+        return true;
     }
 
 

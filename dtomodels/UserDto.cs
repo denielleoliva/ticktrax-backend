@@ -12,6 +12,8 @@ namespace ticktrax_backend.dtomodels{
 
         public string Password { get; set; }
 
+        public byte[] ProfilePhoto { get; set; }
+
         
 
     }
