@@ -33,7 +33,8 @@ public class UserService : IUserService
             UserName = user.UserName,
             Email = user.Email,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            isDeleted = true
         };
 
         if(user.ProfilePhoto.Length>0)
@@ -79,16 +80,12 @@ public class UserService : IUserService
     {
         User? userToDelete = await manager.FindByIdAsync(id);
 
-        if(userToDelete!=null)
+        if(!userToDelete.isDeleted)
         {
-            var result = manager.DeleteAsync(userToDelete);
+            userToDelete.isDeleted = !userToDelete.isDeleted;
+            await context.SaveChangesAsync();
 
-            if(result.IsCompletedSuccessfully)
-            {
-                return true;
-            }else{
-                return false;
-            }
+            return true;
 
         }
         

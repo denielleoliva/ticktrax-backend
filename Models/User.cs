@@ -10,4 +10,6 @@ public class User: IdentityUser
     public string LastName { get; set; }
     public byte[] ProfilePhoto { get; set; }
 
+    public bool isDeleted { get; set; }
+
 }
