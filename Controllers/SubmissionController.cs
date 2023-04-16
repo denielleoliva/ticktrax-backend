@@ -11,6 +11,8 @@ using System.Data;
 using System.Text;
 using System.ComponentModel;
 using Microsoft.AspNetCore.Cors;
+using System.Data;
+using Microsoft.VisualBasic.FileIO;
 
 namespace ticktrax_backend.Controllers;
 
@@ -104,6 +106,8 @@ public class SubmissionController : ControllerBase
             //await DownloadImage(s.Photo, "/Users/denielleoliva/Documents/"+fileName);
             await DownloadImage(s.Photo, "../photos_ticktrax/" + fileName);
 
+            GetTickPrediction(s.FileName);
+
             return Ok("saved post...");
         }
     }
@@ -133,6 +137,59 @@ public class SubmissionController : ControllerBase
         System.IO.File.WriteAllBytes(filePath, img);
 
         return true;
+    }
+
+    [HttpGet("/prediction/{photoID}")]
+    public async Task<IActionResult> ReturnPrediction(string photoName)
+    {
+        return new JsonResult(GetTickPrediction(photoName));
+    }
+
+
+    public string GetTickPrediction(string fileName)
+    {
+        DataTable tickPredictionTable = new DataTable();
+
+        string csvFilePath = "~/ticktrax/Desktop/results.csv";
+
+        try
+        {
+            using(TextFieldParser csvReader = new TextFieldParser(csvFilePath))
+            {
+                csvReader.SetDelimiters(new string[] { "," });
+                csvReader.HasFieldsEnclosedInQuotes = true;
+                string[] colFields = csvReader.ReadFields();
+
+                foreach (string column in colFields)
+                {
+                    DataColumn datacolumn = new DataColumn(column);
+                    datacolumn.AllowDBNull = true;
+                    tickPredictionTable.Columns.Add(datacolumn);
+                }
+
+                while (!csvReader.EndOfData)
+                {
+                    string[] fieldData = csvReader.ReadFields();
+                    //Making empty value as null
+                    for (int i = 0; i < fieldData.Length; i++)
+                    {
+                        if (fieldData[i] == "")
+                        {
+                            fieldData[i] = null;
+                        }
+                    }
+
+                    tickPredictionTable.Rows.Add(fieldData);
+                }
+            }
+        }catch(Exception e){
+
+        }
+
+        DataRow dr = tickPredictionTable.AsEnumerable()
+               .SingleOrDefault(r=> r.Field<string>("FNAME") == fileName);
+
+        return dr.Field<string>("GENUS")+","+dr.Field<string>("SPECIES");
     }
 
 

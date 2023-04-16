@@ -4,6 +4,7 @@ using System.Collections;
 using ticktrax_backend.Data;
 using ticktrax_backend.dtomodels;
 using Geolocation;
+using System.Diagnostics;
 
 public class SubmissionService : ISubmissionService
 {
@@ -85,6 +86,30 @@ public class SubmissionService : ISubmissionService
 
         //fix nullable at some point
         return result;
+    }
+    
+    private void run_cmd(string cmd, string args)
+    {
+        string source = "";
+        string dest = "";
+        string model = "";
+
+        cmd = "predict.py";
+        args = source + dest + model;
+
+        ProcessStartInfo start = new ProcessStartInfo();
+        start.FileName = "~/ticktrax/Desktop/TickIDNet-main/predict.py";
+        start.Arguments = string.Format("{0} {1}", cmd, args);
+        start.UseShellExecute = false;
+        start.RedirectStandardOutput = true;
+        using(Process process = Process.Start(start))
+        {
+            using(StreamReader reader = process.StandardOutput)
+            {
+                string result = reader.ReadToEnd();
+                Console.Write(result);
+            }
+        }
     }
 
 
