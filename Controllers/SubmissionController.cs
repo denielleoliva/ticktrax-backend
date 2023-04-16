@@ -139,12 +139,11 @@ public class SubmissionController : ControllerBase
         return true;
     }
 
-    [HttpGet("/prediction/{photoID}")]
+    [HttpGet("/prediction/{photoName}")]
     public async Task<IActionResult> ReturnPrediction(string photoName)
     {
         return new JsonResult(GetTickPrediction(photoName));
     }
-
 
     public string GetTickPrediction(string fileName)
     {

@@ -88,14 +88,14 @@ public class SubmissionService : ISubmissionService
         return result;
     }
     
-    private void run_cmd(string cmd, string args)
+    private void run_cmd()
     {
-        string source = "";
-        string dest = "";
-        string model = "";
+        string source = "/home/ticktrax/photos_ticktrax/";
+        string dest = "/home/ticktrax/Desktop";
+        string model = "/home/ticktrax/Desktop";
 
-        cmd = "predict.py";
-        args = source + dest + model;
+        string cmd = "predict.py";
+        string args = source + dest + model;
 
         ProcessStartInfo start = new ProcessStartInfo();
         start.FileName = "~/ticktrax/Desktop/TickIDNet-main/predict.py";

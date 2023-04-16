@@ -23,16 +23,16 @@ namespace ticktrax_backend
         public void ConfigureServices(IServiceCollection services)
         {
             //Uncomment for VM Usage
-            // services.AddDbContext<TickTraxContext>(dbContextOptions =>
-            //     dbContextOptions.UseMySql(
-            //         "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
-            //         ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
-
-            //Uncomment for Personal dev environment usage
             services.AddDbContext<TickTraxContext>(dbContextOptions =>
                 dbContextOptions.UseMySql(
-                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+                    "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=dan;Password=supersecret!1;", 
                     ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
+
+            //Uncomment for Personal dev environment usage
+            // services.AddDbContext<TickTraxContext>(dbContextOptions =>
+            //     dbContextOptions.UseMySql(
+            //         "Server=localhost,3306;Initial Catalog=tickTraxDb;User Id=danno;Password=Danisthebest!1;", 
+            //         ServerVersion.Create(new Version(10,11,1), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MariaDb)));
             
 
             services.AddIdentity<User, IdentityRole>(options => {
