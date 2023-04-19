@@ -16,4 +16,6 @@ public interface ISubmissionService
 
     Task<Submission> GetByLocation(double Longitude, double Latitude);
 
+    IEnumerable<string> GetTickPrediction(string fileName);
+
 }

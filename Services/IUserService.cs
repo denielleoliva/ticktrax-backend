@@ -7,7 +7,6 @@ public interface IUserService
 
     Task<IdentityResult> AddUser(UserDto user);
 
-    Task<bool> UpdateUser(User user);
 
     Task<bool> DeleteUser(string id);
 

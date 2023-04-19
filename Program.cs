@@ -22,6 +22,7 @@ namespace ticktrax_backend
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                     .ConfigureAppConfiguration(AddConfiguration)
+                .UseSetting("https_port", "5001")
                 .UseStartup<Startup>()
                 .Build();
 

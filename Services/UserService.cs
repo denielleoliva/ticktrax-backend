@@ -34,47 +34,18 @@ public class UserService : IUserService
             Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            isDeleted = true
+            isDeleted = false,
+            ProfilePhoto = System.IO.File.ReadAllBytes("/home/ticktrax/Documents/defphoto.png")
         };
-
-        if(user.ProfilePhoto.Length>0)
-        {
-            if(user.ProfilePhoto.Length>2097152)
-            {
-                newUser.ProfilePhoto = user.ProfilePhoto;
-
-            }else{
-                throw new Exception("file is too large");
-            }
-        }
 
         var result = await manager.CreateAsync(newUser, user.Password);
 
-        if (result.Succeeded)  
-        {  
-            var defaultrole = roleManager.FindByNameAsync("Default").Result;  
-
-            if (defaultrole != null)  
-            {  
-              IdentityResult roleresult = await  manager.AddToRoleAsync(newUser, defaultrole.Name);  
-            }  
-
-    
-        }
 
         return result;
 
     }
 
-    public async Task<bool> UpdateUser(User user)
-    {
-        await manager.UpdateAsync(user);
-
-        await context.SaveChangesAsync();
-
-        return true;
-    }
-
+    
 
     public async Task<bool> DeleteUser(string id)
     {

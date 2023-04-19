@@ -87,18 +87,30 @@ public class SubmissionService : ISubmissionService
         //fix nullable at some point
         return result;
     }
+
+    public IEnumerable<string> GetTickPrediction(string fileName)
+    {
+
+        string csvFilePath = "../Desktop/results.csv";
+
+        var lineAsArray = System.IO.File.ReadLines(csvFilePath).Where(s => s.Contains(fileName));
+
+        Console.WriteLine(lineAsArray);
+
+        return lineAsArray;
+    }
     
     private void run_cmd()
     {
-        string source = "/home/ticktrax/photos_ticktrax/";
-        string dest = "/home/ticktrax/Desktop";
-        string model = "/home/ticktrax/Desktop";
+        string source = "../home/ticktrax/photos_ticktrax/";
+        string dest = "../home/ticktrax/Desktop";
+        string model = "../home/ticktrax/Desktop";
 
         string cmd = "predict.py";
         string args = source + dest + model;
 
         ProcessStartInfo start = new ProcessStartInfo();
-        start.FileName = "~/ticktrax/Desktop/TickIDNet-main/predict.py";
+        start.FileName = "../home/ticktrax/Desktop/TickIDNet-main/predict.py";
         start.Arguments = string.Format("{0} {1}", cmd, args);
         start.UseShellExecute = false;
         start.RedirectStandardOutput = true;

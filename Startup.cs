@@ -54,7 +54,7 @@ namespace ticktrax_backend
                         options.AddDefaultPolicy(
                             builder =>
                             {
-                                builder.WithOrigins("http://localhost:5095", "http://localhost:8080")
+                                builder.WithOrigins("http://localhost:5095", "http://localhost:8080", "https://ticktrax.nevada.dev", "http://localhost:9001")
                                                     .AllowAnyHeader()
                                                     .AllowAnyMethod();
                             });
@@ -109,7 +109,6 @@ namespace ticktrax_backend
             app.UseAuthentication();
             
             app.UseAuthorization();
-
 
             app.UseCors();
 

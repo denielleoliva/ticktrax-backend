@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Cors;
+using ticktrax_backend.Data;
 
 
 namespace ticktrax_backend.Controllers;
@@ -25,15 +26,18 @@ public class AuthController : ControllerBase
     private UserManager<User> userManager;
     private IEmailService emailService;
     private SignInManager<User> signInManager;
+    private TickTraxContext _context;
 
     private readonly IConfiguration _config;
+
 
     public AuthController(ILogger<AuthController> logger, 
                                 IUserService userService, 
                                 UserManager<User> userManager, 
                                 IEmailService emailService, 
                                 SignInManager<User> signInManager,
-                                IConfiguration configuration)
+                                IConfiguration configuration,
+                                TickTraxContext context)
     {
         _logger = logger;
         this.userService = userService;
@@ -41,6 +45,7 @@ public class AuthController : ControllerBase
         this.emailService = emailService;
         this.signInManager = signInManager;
         _config = configuration;
+        _context = context;
     }
 
 
@@ -126,8 +131,6 @@ public class AuthController : ControllerBase
 
         var result = await userService.AddUser(user);
 
-        System.IO.File.WriteAllBytes("../ticktrax/users/"+user.UserName,user.ProfilePhoto);
-
         if(result.Succeeded)
         {
             User newUser = await userService.GetUserByEmail(user.Email);
@@ -153,12 +156,39 @@ public class AuthController : ControllerBase
         return BadRequest("could not make a user");
     }
 
-    [HttpPost("/update")]
-    public async Task<IActionResult> UpdateUserInformation(User user)
+    [HttpPost("/update/{id}")]
+    public  async Task<IActionResult> UpdateUserInformation([FromBody]UserDto user, string id)
     {
-        await userService.UpdateUser(user);
+        User? userToEdit = await userManager.FindByIdAsync(id);
 
-        return Ok("user updated");
+        if(userToEdit.UserName != user.UserName){
+            userToEdit.UserName = user.UserName;
+        }
+
+        if(userToEdit.Email != user.Email){
+            userToEdit.Email = user.Email;
+        }
+
+        if(userToEdit.FirstName != user.FirstName){
+            userToEdit.FirstName = user.FirstName;
+        }
+
+        if(userToEdit.LastName != user.LastName){
+            userToEdit.LastName = user.LastName;
+        }
+
+        IdentityResult result = await userManager.UpdateAsync(userToEdit);
+
+        await _context.SaveChangesAsync();
+
+
+        if(result.Succeeded)
+        {
+            return Ok("user updated");
+        }
+
+
+        return BadRequest("user not updated");
     }
 
 
